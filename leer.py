@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-from MFRC522 import MFRC522
+from MFRC522python.MFRC522 import MFRC522
 import signal
 import pymysql
 pymysql.install_as_MySQLdb()
@@ -32,11 +32,15 @@ print ("Presiona Ctrl-C para terminar la ejecucion.")
 
 # Este lazo sigue buscando chips. Si uno está cerca, obtendrá el UID y se autenticará
 while continue_reading:
+    if guardando:
+    print ("Comprobando permiso...")
+    continue
 
     # Scan for cards    
     (status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
 
     (status,uid) = MIFAREReader.MFRC522_Anticoll()
+
     if status == MIFAREReader.MI_OK:
         # El UID de la tarjeta es la concatenacion de todos los string
         cardUID = str(uid[0])+str(uid[1])+str(uid[2])+str(uid[3])
@@ -63,7 +67,7 @@ while continue_reading:
                     AND is_active = '0'
                 ORDER by datos.date_creation DESC
                 LIMIT 1
-                """.format(id_persona=auth[0].id)
+                """.format(id_persona=auth[0])
                 cursor.execute(query_datos_existentes)
                 resultado_datos = cursor.fetchall()
                 
@@ -72,9 +76,9 @@ while continue_reading:
                 if datos:
                     fecha_creacion = date.today()
                     hora = date.today()
-                    if datos[0].tipo=="entra":
+                    if datos[2].tipo=="entra":
                         tipo = "sale"                        
-                    elif datos[0].tipo=="sale":
+                    elif datos[2].tipo=="sale":
                         tipo = "entra"
                     else:
                         tipo = "entra"
@@ -86,12 +90,12 @@ while continue_reading:
                     resulta_conse = cursor.fetchall()
                     consec = 0
                     for row_conse in resulta_conse:
-                        consec = int(row_conse['id'])
+                        consec = int(row_conse[0])
                     consecutivo = consec + 1
                     
                     cursor.execute("""INSERT INTO datos_datos VALUES (%s,%s,%s,%s,%s,%s)""",(consecutivo,fecha_creacion,tipo,hora,0,1))
                     cursor.commit()
-                    cursor.execute("""INSERT INTO personas_personas_datos VALUES (%s,%s,%s)""",(None,datos[0].id,consecutivo))
+                    cursor.execute("""INSERT INTO personas_personas_datos VALUES (%s,%s,%s)""",(None,auth[0],consecutivo))
                     cursor.commit()
                     cursor.close()
 
