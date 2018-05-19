@@ -113,11 +113,11 @@ while continue_reading:
                     conn.commit()
                     conn.close()
 
-                    GPIO.output(gpio_led_green,1)
-                    GPIO.output(gpio_led_red,0)
+                    GPIO.output(gpio_led_green,GPIO.LOW)
+                    GPIO.output(gpio_led_red,GPIO.HIGH)
             else:
-                GPIO.output(gpio_led_green,0)
-                GPIO.output(gpio_led_red,1)
+                GPIO.output(gpio_led_green,GPIO.HIGH)
+                GPIO.output(gpio_led_red,GPIO.LOW)
                 print("No existe registro")
 
         except  Exception as e:
@@ -139,5 +139,5 @@ while continue_reading:
         else:
             print ("Authentication error")
             time.sleep(5)
-        GPIO.output(gpio_led_green,0)
-        GPIO.output(gpio_led_red,0)
+        GPIO.output(gpio_led_green,GPIO.HIGH)
+        GPIO.output(gpio_led_red,GPIO.HIGH)
