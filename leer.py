@@ -1,4 +1,4 @@
-import RPi.GPIO as GPIO_DOS
+import RPi.GPIO as GPIO
 from MFRC522python.MFRC522 import MFRC522
 import signal
 import pymysql
@@ -15,19 +15,19 @@ FALSE = 0
 gpio_led_red = int(16)
 gpio_led_green = int(20)
 
-#GPIO_DOS.setmode(GPIO_DOS.BCM)
+# GPIO_DOS.setmode(GPIO_DOS.BCM)
 #GPIO.setmode(GPIO.BCM)
-mode = GPIO_DOS.getmode()
-GPIO_DOS.cleanup()
-GPIO_DOS.setmode(GPIO_DOS.BCM)
-GPIO_DOS.setup(16, GPIO_DOS.OUT)
-GPIO_DOS.setup(20, GPIO_DOS.OUT)
+# mode = GPIO_DOS.getmode()
+# GPIO_DOS.cleanup()
+# GPIO_DOS.setmode(GPIO_DOS.BCM)
+# GPIO_DOS.setup(16, GPIO_DOS.OUT)
+# GPIO_DOS.setup(20, GPIO_DOS.OUT)
 
 def end_read(signal,frame):
     global continue_reading
     print ("Ctrl + C capturado, finalizando la lectura.")
     continue_reading = False
-    GPIO_DOS.cleanup()
+    GPIO.cleanup()
 
 # señal de tarjetas
 signal.signal(signal.SIGINT, end_read)
@@ -112,11 +112,11 @@ while continue_reading:
                     conn.commit()
                     conn.close()
 
-                    GPIO_DOS.output(gpio_led_green,True)
-                    GPIO_DOS.output(gpio_led_red,False)
+                    GPIO.output(gpio_led_green,True)
+                    GPIO.output(gpio_led_red,False)
             else:
-                GPIO_DOS.output(gpio_led_green,False)
-                GPIO_DOS.output(gpio_led_red,True)
+                GPIO.output(gpio_led_green,False)
+                GPIO.output(gpio_led_red,True)
                 print("No existe registro")
 
         except  Exception as e:
@@ -138,5 +138,5 @@ while continue_reading:
         else:
             print ("Authentication error")
             time.sleep(5)
-        GPIO_DOS.output(gpio_led_green,False)
-        GPIO_DOS.output(gpio_led_red,False)
+        GPIO.output(gpio_led_green,False)
+        GPIO.output(gpio_led_red,False)
