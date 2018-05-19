@@ -77,8 +77,8 @@ while continue_reading:
                 for row_datos in resultado_datos:
                     datos = row_datos
                 if datos:
-                    fecha_creacion = date.today()
-                    hora = date.today()
+                    fecha_creacion = datetime.datetime.now()
+                    hora = datetime.datetime.now()
                     print(datos)
                     if datos[2]=="entra":
                         tipo = "sale"                        
