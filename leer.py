@@ -14,8 +14,7 @@ TRUE = 1
 FALSE = 0
 gpio_led_red = int(16)
 gpio_led_green = int(20)
-GPIO.output(gpio_led_green,1)
-GPIO.output(gpio_led_red,1)
+
 # GPIO_DOS.setmode(GPIO_DOS.BCM)
 #GPIO.setmode(GPIO.BCM)
 # mode = GPIO_DOS.getmode()
@@ -35,7 +34,8 @@ signal.signal(signal.SIGINT, end_read)
 
 # iniciar la clase MFRC522 tarjeta
 MIFAREReader = MFRC522()
-
+GPIO.output(gpio_led_green,1)
+GPIO.output(gpio_led_red,1)
 # Mensaje de inicio
 print ("Bienvenido a la lectura de Tarjeta")
 print ("Presiona Ctrl-C para terminar la ejecucion.")
