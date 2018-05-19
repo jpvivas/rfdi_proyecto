@@ -93,7 +93,7 @@ while continue_reading:
                         consec = int(row_conse[0])
                     consecutivo = consec + 1
                     
-                    cursor.execute("""INSERT INTO datos_datos VALUES (%s,%s,%s,%s,%s,%s)""",(consecutivo,fecha_creacion,tipo,hora,0,1))
+                    cursor.execute("""INSERT INTO datos_datos VALUES (%s,%s,%s,%s,%s,%s)""",(consecutivo,fecha_creacion,tipo,hora,'0','1'))
                     cursor.commit()
                     cursor.execute("""INSERT INTO personas_personas_datos VALUES (%s,%s,%s)""",(None,auth[0],consecutivo))
                     cursor.commit()
