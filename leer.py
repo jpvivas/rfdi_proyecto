@@ -78,9 +78,9 @@ while continue_reading:
                 if datos:
                     fecha_creacion = date.today()
                     hora = date.today()
-                    if datos[2].tipo=="entra":
+                    if datos[2]=="entra":
                         tipo = "sale"                        
-                    elif datos[2].tipo=="sale":
+                    elif datos[2]=="sale":
                         tipo = "entra"
                     else:
                         tipo = "entra"
