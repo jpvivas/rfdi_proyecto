@@ -33,8 +33,8 @@ print ("Presiona Ctrl-C para terminar la ejecucion.")
 # Este lazo sigue buscando chips. Si uno está cerca, obtendrá el UID y se autenticará
 while continue_reading:
     if guardando:
-    print ("Comprobando permiso...")
-    continue
+        print ("Comprobando permiso...")
+        continue
 
     # Scan for cards    
     (status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
