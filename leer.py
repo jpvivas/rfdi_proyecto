@@ -17,6 +17,9 @@ gpio_led_green = int(20)
 
 #GPIO_DOS.setmode(GPIO_DOS.BCM)
 #GPIO.setmode(GPIO.BCM)
+mode = GPIO_DOS.getmode()
+GPIO_DOS.cleanup()
+GPIO_DOS.setmode(GPIO_DOS.BOARD)
 GPIO_DOS.setup(16, GPIO_DOS.OUT)
 GPIO_DOS.setup(20, GPIO_DOS.OUT)
 
