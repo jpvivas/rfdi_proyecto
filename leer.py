@@ -14,7 +14,8 @@ TRUE = 1
 FALSE = 0
 gpio_led_red = int(16)
 gpio_led_green = int(20)
-
+GPIO.output(gpio_led_green,1)
+GPIO.output(gpio_led_red,1)
 # GPIO_DOS.setmode(GPIO_DOS.BCM)
 #GPIO.setmode(GPIO.BCM)
 # mode = GPIO_DOS.getmode()
@@ -112,11 +113,11 @@ while continue_reading:
                     conn.commit()
                     conn.close()
 
-                    GPIO.output(gpio_led_green,True)
-                    GPIO.output(gpio_led_red,False)
+                    GPIO.output(gpio_led_green,1)
+                    GPIO.output(gpio_led_red,0)
             else:
-                GPIO.output(gpio_led_green,False)
-                GPIO.output(gpio_led_red,True)
+                GPIO.output(gpio_led_green,0)
+                GPIO.output(gpio_led_red,1)
                 print("No existe registro")
 
         except  Exception as e:
@@ -138,5 +139,5 @@ while continue_reading:
         else:
             print ("Authentication error")
             time.sleep(5)
-        GPIO.output(gpio_led_green,False)
-        GPIO.output(gpio_led_red,False)
+        GPIO.output(gpio_led_green,0)
+        GPIO.output(gpio_led_red,0)
