@@ -12,6 +12,12 @@ continue_reading = True
 guardando = False
 TRUE = 1
 FALSE = 0
+gpio_led_red = 16
+gpio_led_green = 20
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(gpio_led_red, GPIO.OUT)
+GPIO.setup(gpio_led_green, GPIO.OUT)
 
 def end_read(signal,frame):
     global continue_reading
@@ -86,7 +92,6 @@ while continue_reading:
                         tipo = "entra"
                     else:
                         tipo = "entra"
-
                     query_consecutivo_datos = """
                     SELECT id FROM datos_datos  ORDER by date_creation DESC LIMIT 1
                     """
@@ -103,7 +108,11 @@ while continue_reading:
                     conn.commit()
                     conn.close()
 
+                    GPIO.output(gpio_led_green,True)
+                    GPIO.output(gpio_led_red,False)
             else:
+                GPIO.output(gpio_led_green,False)
+                GPIO.output(gpio_led_red,True)
                 print("No existe registro")
 
         except  Exception as e:
@@ -121,5 +130,9 @@ while continue_reading:
         if status == MIFAREReader.MI_OK:
             MIFAREReader.MFRC522_Read(8)
             MIFAREReader.MFRC522_StopCrypto1()
+            time.sleep(5)
         else:
             print ("Authentication error")
+            time.sleep(5)
+        GPIO.output(gpio_led_green,False)
+        GPIO.output(gpio_led_red,False)
