@@ -12,8 +12,8 @@ continue_reading = True
 guardando = False
 TRUE = 1
 FALSE = 0
-gpio_led_red = int(16)
-gpio_led_green = int(20)
+gpio_led_red = int(38)
+gpio_led_green = int(36)
 
 # GPIO_DOS.setmode(GPIO_DOS.BCM)
 #GPIO.setmode(GPIO.BCM)
