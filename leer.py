@@ -1,4 +1,4 @@
-import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO_DOS
 from MFRC522python.MFRC522 import MFRC522
 import signal
 import pymysql
@@ -12,12 +12,13 @@ continue_reading = True
 guardando = False
 TRUE = 1
 FALSE = 0
-gpio_led_red = 16
-gpio_led_green = 20
+gpio_led_red = int(16)
+gpio_led_green = int(20)
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(gpio_led_red, GPIO.OUT)
-GPIO.setup(gpio_led_green, GPIO.OUT)
+#GPIO_DOS.setmode(GPIO_DOS.BCM)
+#GPIO.setmode(GPIO.BCM)
+GPIO_DOS.setup(16, GPIO.OUT)
+GPIO_DOS.setup(20, GPIO.OUT)
 
 def end_read(signal,frame):
     global continue_reading
@@ -83,8 +84,8 @@ while continue_reading:
                 for row_datos in resultado_datos:
                     datos = row_datos
                 if datos:
-                    fecha_creacion = datetime.datetime.now()
-                    hora = datetime.datetime.now()
+                    fecha_creacion = datetime.now()
+                    hora = datetime.now()
                     print(datos)
                     if datos[2]=="entra":
                         tipo = "sale"                        
