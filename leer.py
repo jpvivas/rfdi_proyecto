@@ -64,7 +64,7 @@ while continue_reading:
                     INNER JOIN personas_personas as personas ON (personas.id = personas_datos.personas_id)
                 WHERE 
                     personas.id = {id_persona}
-                    AND is_active = '0'
+                    AND is_active = 0
                 ORDER by datos.date_creation DESC
                 LIMIT 1
                 """.format(id_persona=auth[0])
