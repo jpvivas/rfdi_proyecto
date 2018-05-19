@@ -51,6 +51,7 @@ while continue_reading:
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM personas_personas WHERE is_active='0' AND tarjeta_uid="+cardUID)
             result = cursor.fetchall()
+            auth = []
             for row in result:
                 auth = row
 
@@ -72,12 +73,13 @@ while continue_reading:
                 """.format(id_persona=auth[0])
                 cursor.execute(query_datos_existentes)
                 resultado_datos = cursor.fetchall()
-                
+                datos = []
                 for row_datos in resultado_datos:
                     datos = row_datos
                 if datos:
                     fecha_creacion = date.today()
                     hora = date.today()
+                    print(datos)
                     if datos[2]=="entra":
                         tipo = "sale"                        
                     elif datos[2]=="sale":
@@ -99,16 +101,19 @@ while continue_reading:
                     conn.commit()
                     cursor.execute("""INSERT INTO personas_personas_datos VALUES (%s,%s,%s)""",(None,auth[0],consecutivo))
                     conn.commit()
-                    cursor.close()
+                    conn.close()
 
             else:
                 print("No existe registro")
 
         except  Exception as e:
             print(e)
-            cursor.close()
+            conn.close()
 
-        key = [0xFF,0xFF,0xFF,0xFF,0xFF,0xFF]
+        key = [0xFF,0xFF,0xFF,0xFF,0xFF,0xFF]          
+        # Select the scanned tag
+        MIFAREReader.MFRC522_SelectTag(uid)
+
         # Authenticate
         status = MIFAREReader.MFRC522_Auth(MIFAREReader.PICC_AUTHENT1A, 8, key, uid)
 
@@ -117,4 +122,4 @@ while continue_reading:
             MIFAREReader.MFRC522_Read(8)
             MIFAREReader.MFRC522_StopCrypto1()
         else:
-            print ("error con la tarjeta")
+            print ("Authentication error")
